@@ -5,11 +5,12 @@ import 'package:teste_app/list/apps_list.dart';
 import 'package:teste_app/services/shared_preferences_services.dart';
 import 'package:teste_app/widgets/custom_title.dart';
 
-
 // Classe que representa a página de perfil
 // StatefulWidget é usado porque algumas partes mudam dinamicamente (ex: cor da borda, visibilidade da senha)
 class PerfilPage extends StatefulWidget {
-  const PerfilPage({super.key}); // Construtor com chave opcional (boa prática para widgets)
+  const PerfilPage({
+    super.key,
+  }); // Construtor com chave opcional (boa prática para widgets)
 
   @override
   State<PerfilPage> createState() => _PerfilPageState();
@@ -23,27 +24,30 @@ class _PerfilPageState extends State<PerfilPage> {
   // Cor da borda da foto de perfil — pode ser alterada clicando nos botões de cor
   Color corBorda = Colors.blue;
 
-List<Map<String, dynamic>> ListInfo = [{"title":"meu nome", "Icons":"Icons.person_3","subtitle":"ado"},
-{"title":"meu nome", "Icons":"Icons.person_3","subtitle":"ado"},
-{"title":"meu nome", "Icons":"Icons.person_3","subtitle":"ado"}];
+  List<Map<String, dynamic>> ListInfo = [
+    {"title": "meu nome", "Icons": "Icons.person_3", "subtitle": "ado"},
+    {"title": "meu nome", "Icons": "Icons.person_3", "subtitle": "ado"},
+    {"title": "meu nome", "Icons": "Icons.person_3", "subtitle": "ado"},
+  ];
   // Controladores para capturar o texto digitado nos campos de login e senha
   TextEditingController controllerLogin = TextEditingController();
   TextEditingController controllerSenha = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold( // Estrutura base da tela (AppBar + Body)
+    return Scaffold(
+      // Estrutura base da tela (AppBar + Body)
       appBar: AppBar(
         actions: [
-     Padding(
-      padding: const EdgeInsets.only(right: 10),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.pushNamed(context, "/dadosUsuario");
-        },
-        child: Icon(Icons.settings),
-      ),
-     )
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, "/dadosUsuario");
+              },
+              child: Icon(Icons.settings),
+            ),
+          ),
         ],
         toolbarOpacity: 0.7, // Transparência da barra
         foregroundColor: Colors.black, // Cor do texto e ícones
@@ -58,10 +62,10 @@ List<Map<String, dynamic>> ListInfo = [{"title":"meu nome", "Icons":"Icons.perso
         // ListView permite rolar a tela para evitar overflow em telas menores
         child: ListView(
           children: [
-            Column( // Agrupa elementos verticalmente
+            Column(
+              // Agrupa elementos verticalmente
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 // Foto de perfil dentro de um Stack para sobrepor o ícone de câmera
                 Stack(
                   children: [
@@ -72,7 +76,8 @@ List<Map<String, dynamic>> ListInfo = [{"title":"meu nome", "Icons":"Icons.perso
                           color: corBorda, // Borda colorida
                           shape: BoxShape.circle, // Formato circular
                         ),
-                        child: ClipOval( // Garante que a imagem fique redonda
+                        child: ClipOval(
+                          // Garante que a imagem fique redonda
                           child: Image.network(
                             height: 120,
                             width: 120,
@@ -86,7 +91,7 @@ List<Map<String, dynamic>> ListInfo = [{"title":"meu nome", "Icons":"Icons.perso
                     // Ícone de câmera posicionado sobre a foto
                     Positioned(
                       right: 135, // Distância da direita
-                      bottom: 7,  // Distância de baixo
+                      bottom: 7, // Distância de baixo
                       child: Container(
                         padding: EdgeInsets.all(5),
                         child: Icon(Icons.camera),
@@ -102,10 +107,13 @@ List<Map<String, dynamic>> ListInfo = [{"title":"meu nome", "Icons":"Icons.perso
                 // Linha com três botões que mudam a cor da borda da foto
                 Row(
                   children: [
-                    Expanded( // Ocupa espaço proporcional na tela
-                      child: GestureDetector( // Detecta toques
+                    Expanded(
+                      // Ocupa espaço proporcional na tela
+                      child: GestureDetector(
+                        // Detecta toques
                         onTap: () {
-                          setState(() { // Atualiza o estado da tela
+                          setState(() {
+                            // Atualiza o estado da tela
                             corBorda = Colors.blue;
                           });
                         },
@@ -149,36 +157,54 @@ List<Map<String, dynamic>> ListInfo = [{"title":"meu nome", "Icons":"Icons.perso
                 SizedBox(height: 20), // Espaçamento vertical
 
                 // Exibe nome do usuário
-              
-              CustomTitle(title: "meu nome", icon: Icons.person_4, subtitle: "ado"),
+                CustomTitle(
+                  title: "meu nome",
+                  icon: Icons.person_4,
+                  subtitle: "ado",
+                ),
 
                 SizedBox(height: 20),
 
                 // Exibe e-mail do usuário
-                  CustomTitle(title: "meu email", icon: Icons.email, subtitle: "ado@gmail.com"),
+                CustomTitle(
+                  title: "meu email",
+                  icon: Icons.email,
+                  subtitle: "ado@gmail.com",
+                ),
 
                 SizedBox(height: 20),
 
-                  CustomTitle(title: "Meu cargo", icon: Icons.business, subtitle: "desenvolvedor"),
+                CustomTitle(
+                  title: "Meu cargo",
+                  icon: Icons.business,
+                  subtitle: "desenvolvedor",
+                ),
 
                 // Formulário para login
                 Form(
                   child: Column(
                     children: [
-                      ...AppsList.listTitles.map((Title){
-                        return CustomTitle(title: Title["title"], icon: Title["icon"], subtitle: Title["valor"]);
+                      ...AppsList.listTitles.map((Title) {
+                        return CustomTitle(
+                          title: Title["title"],
+                          icon: Title["icon"],
+                          subtitle: Title["valor"],
+                        );
                       }),
                       SizedBox(
                         child: TextFormField(
                           maxLength: 10, // Máximo de caracteres
-                          controller: controllerLogin, // Controla o valor digitado
+                          controller:
+                              controllerLogin, // Controla o valor digitado
                           decoration: InputDecoration(
                             labelText: "login", // Texto do campo
-                            focusedBorder: OutlineInputBorder( // Borda quando focado
+                            focusedBorder: OutlineInputBorder(
+                              // Borda quando focado
                               borderRadius: BorderRadius.circular(50),
                               borderSide: BorderSide(color: Colors.blue),
                             ),
-                            enabledBorder: OutlineInputBorder( // Borda quando não focado
+                            enabledBorder: OutlineInputBorder(
+                              // Borda quando não focado
                               borderSide: BorderSide(color: Colors.black),
                             ),
                           ),
@@ -235,17 +261,17 @@ List<Map<String, dynamic>> ListInfo = [{"title":"meu nome", "Icons":"Icons.perso
                       ),
                       backgroundColor: WidgetStatePropertyAll(Colors.black),
                     ),
-                    onPressed: ()  async{
+                    onPressed: () async {
                       // Apenas imprime no console — aqui poderia ter lógica de autenticação
                       print(controllerLogin.text);
                       print(controllerSenha.text);
 
-                    await SharedPreferencesServices.setStringLocalStorage(
+                      await SharedPreferencesServices.setStringLocalStorage(
                         controllerLogin.text,
                         "login",
                       );
 
-                    await SharedPreferencesServices.setStringLocalStorage(
+                      await SharedPreferencesServices.setStringLocalStorage(
                         controllerSenha.text,
                         "senha",
                       );
@@ -261,7 +287,10 @@ List<Map<String, dynamic>> ListInfo = [{"title":"meu nome", "Icons":"Icons.perso
                     SizedBox(width: 5),
                     Text(
                       "bio",
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
@@ -274,7 +303,7 @@ List<Map<String, dynamic>> ListInfo = [{"title":"meu nome", "Icons":"Icons.perso
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
-                    "Ado é uma cantora japonesa que conquistou fama mundial..."
+                    "Ado é uma cantora japonesa que conquistou fama mundial...",
                     // Texto longo descrevendo o artista
                   ),
                 ),
@@ -287,7 +316,10 @@ List<Map<String, dynamic>> ListInfo = [{"title":"meu nome", "Icons":"Icons.perso
                   ),
                   onPressed: () {
                     print("cliquei");
-                    Navigator.pushNamed(context, "/home"); // Navega para rota "/home"
+                    Navigator.pushNamed(
+                      context,
+                      "/home",
+                    ); // Navega para rota "/home"
                   },
                   child: Text("volta para home"),
                 ),
